@@ -30,10 +30,33 @@ def obtenerDivisores(numero: int) -> list:
             listaAuxiliar.append(i)
     return listaAuxiliar
 
-print(obtenerDivisores(18))
-
 """ Crea una función que determine la media de una lista de números, pero solo tenga en cuenta los negativos """
+def obtenerMediaNegativos(lista: list) -> float:
+    #para una media necesito la suma y la cantidad de numerosnume
+    cantidad = 0
+    suma = 0
+    #cuando veas estos simbolos += significa que ese valor incrementa
+    for numero in lista:
+        if numero < 0:
+            cantidad += 1
+            suma += numero
+
+    media = suma/cantidad
+    return media
+
 
 """ Define una función que retorne el exponencial de un número recibiendo el exponencial también
 por ejemplo 5 a la 3 eso es igual a 5 * 5 * 5 = 125, exponencial 3 y el numero 5
+4 a la 16 4 * 4 * 4 * 4...
+2 a la 4 -> 2 * 2 * 2 * 2
 """
+
+def obtenerExponencial(numero: int, exponente: int) ->int:
+    resultado = 1
+
+    #cuando me encuentro dentro un range un número al principio o una variab le, quiere decir que desde ahí va a empezar el for
+    #minetras que el segundo valor o variable es donde se va a detener
+    for contador in range(exponente):
+        resultado = resultado * numero
+    
+    return resultado
