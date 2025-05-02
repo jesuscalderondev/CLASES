@@ -1,5 +1,26 @@
 from datetime import datetime
 
+
+#Cuando declaramos una variable y vemos dos puntos, luego veremos el tipo de dato de la variable, ejemplo
+#casas:list = []  -> donde casas es el nombre de la variable y list es el tipo de dato
+productos:list = []
+#Esto almacena los productos que yo ya he creado
+
+
+def esValido(nombre:str) -> bool:
+    
+    #primero el for, segundo el nombre que le vas a dar al iterador tercero el **in** y ultimo las lista de elementos
+    for producto in productos:
+        producto:Producto #Esto me indica que el elemento sobre el que estoy iterando es un objeto de al clase Producto
+
+        if producto.nombre == nombre:
+            return False
+    
+    return True
+
+#No se pueden comparar clases con valores, ni str con numeros, ni booleanos con clases, aunque se puede comparar
+#algunos datos distintos no es lo adecuado
+
 #Definir clases
 
 class Producto:
@@ -9,8 +30,9 @@ class Producto:
     def __init__(self, nombre:str, precio:float, existencias:int):
         self.nombre = nombre
         self.precio = precio
-        self.existencias = existencias
+        self.existencias = existencias 
         self.ventas = 0 #Unidades vendidas
+        self.activo = True #Está diponible si es True y no lo está si es False
 
     def vender(self, unidades:int) -> bool:
 
@@ -34,6 +56,27 @@ class Producto:
             return False
         
         return True
+    
+    def actualizar(self, precio:float = 0, nombre:str = "") -> bool:
+        global productos
+
+        if nombre:
+            if esValido(nombre):
+                self.nombre = nombre
+            else:
+                return False
+
+        if precio < 0:
+            if self.precio != precio:
+                self.precio = precio
+            else:
+                return False
+        
+        return True
+    
+    def eliminar(self):
+        self.activo = False
+        
 
 class Compra:
 
@@ -85,12 +128,3 @@ class Compra:
 
         #debe mostrarme así ->  Total:    $3000
         print(f"Total: ${self.total}")
-
-
-mango = Producto("Mango", 500, 10)
-compra = Compra()
-compra.agregarProducto(mango, 7)
-print(compra.total)
-compra.removerProducto(mango, 4)
-compra.agregarProducto(mango, 2)
-compra.mostrarFactura()
