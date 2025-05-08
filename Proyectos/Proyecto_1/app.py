@@ -3,8 +3,13 @@ from datetime import datetime
 
 #Cuando declaramos una variable y vemos dos puntos, luego veremos el tipo de dato de la variable, ejemplo
 #casas:list = []  -> donde casas es el nombre de la variable y list es el tipo de dato
-productos:list = []
+
 #Esto almacena los productos que yo ya he creado
+productos:list = []
+
+#Esto almacena las ventas que realizamos, cada elemento es un objeto del tipo Compra
+ventas:list = []
+
 
 def esValido(nombre:str) -> bool:
     
@@ -80,8 +85,8 @@ class Producto:
 class Compra:
 
     productos = {} #colección, cualquier colección puede ser iterada
-    total = 0
-    fecha = datetime.now()
+    total = 0 #es donde guardo el valor de la compra o venta
+    fecha = datetime.now().date() #es el momento donde ser realiza la compra o venta
 
     def agregarProducto(self, producto:Producto, unidades:int):
 

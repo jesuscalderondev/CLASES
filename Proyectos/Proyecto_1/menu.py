@@ -1,6 +1,7 @@
-from app import productos, Producto, Compra, esValido
+from app import productos, ventas, Producto, Compra, esValido
+from datetime import datetime
 
-while True:
+while True: 
 
     print("""
 1. Ver producto más vendido
@@ -54,13 +55,14 @@ while True:
             #1. Cuando agregamos productos
             #2. Cuando eliminamos productos
             #3. Cuando modificamos productos (cambiar nombre, precio o stock)
-
+ 
             while True:
                 
                 print("""   
 1. Agregar producto
 2. Eliminar producto
 3. Modificar producto
+4. Volver
 """)
                 opcionSub = input("Opción: ")
 
@@ -129,16 +131,89 @@ while True:
 
                             print("El producto solicitado a modificar no existe")
 
-                                
+                    
+                    case "4":
+                        break
 
                                 
                     case _:
                         print("Opción incorrecta, por favor elige una de las anteriores.")
   
         case "4": #Ver ganancias del dia
-            pass
 
-        case "5":
+            hoy = datetime.now().date()
+            suma = 0
+            
+            for venta in ventas:
+
+                if venta.fecha == hoy:
+                    suma += venta.total
+
+            print(f'Las ganancias del dia son: {suma}')
+                
+
+        case "5": #Realizar venta
+            
+            compra = Compra()
+
+            while True:
+
+                for indice in range(len(productos)):
+                    producto = productos[indice] #obtengo el producto
+
+                    #Se debe ver lo siguiente, de esta manera
+                    # 1. El Nombre del Producto
+                    # 2. El Nombre del Otro Producto
+                    # 3. ETC.
+                    print(f"{indice + 1}. {producto.nombre}")
+
+                opcionProducto = input("¿Qué producto desea agregar a su carrito? Ejemplo: 2, si ya no desea agregar productos ingrese 0\nOpción: ")
+                opcionProducto = int(opcionProducto)
+
+                if opcionProducto == 0:
+                    break
+
+                productoAComprar = productos[opcionProducto - 1]
+
+                unidades = input(f"¿Cuántas unidades desea comprar (Max. {productoAComprar.existencias})?")
+
+                unidades = int(unidades)
+
+                compra.agregarProducto(productoAComprar, unidades)
+            
+            pregunta = input("¿Desea retirar algún producto? Sí (s) o No (n)\nOpción: ")
+
+            if pregunta.lower() == "s":
+
+                while True:
+                    
+                    for indice in range(len(compra.productos)):
+
+                        producto = compra.productos[indice] #obtengo el producto
+
+                        #Se debe ver lo siguiente, de esta manera
+                        # 1. El Nombre del Producto
+                        # 2. El Nombre del Otro Producto
+                        # 3. ETC.
+                        print(f"{indice + 1}. {producto.nombre}")
+
+                    opcionProducto = input("¿Qué producto desea retirar de su carrito? Ejemplo: 2, si ya no desea retirar productos ingrese 0\nOpción: ")
+                    opcionProducto = int(opcionProducto)
+
+                    if opcionProducto == 0:
+                        break
+
+                    productoRetirar = productos[opcionProducto - 1]
+
+                    unidades = input(f"¿Cuántas unidades desea retirar?")
+
+                    unidades = int(unidades)
+
+                    compra.removerProducto(productoRetirar, unidades)
+            
+            ventas.append(compra)
+            compra.mostrarFactura()
+
             pass
 
         case "6":
