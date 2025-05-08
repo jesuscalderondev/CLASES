@@ -6,7 +6,6 @@ from datetime import datetime
 productos:list = []
 #Esto almacena los productos que yo ya he creado
 
-
 def esValido(nombre:str) -> bool:
     
     #primero el for, segundo el nombre que le vas a dar al iterador tercero el **in** y ultimo las lista de elementos
@@ -66,7 +65,7 @@ class Producto:
             else:
                 return False
 
-        if precio < 0:
+        if precio > 0:
             if self.precio != precio:
                 self.precio = precio
             else:

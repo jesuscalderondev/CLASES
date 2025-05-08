@@ -1,4 +1,4 @@
-from app import productos, Producto, Compra
+from app import productos, Producto, Compra, esValido
 
 while True:
 
@@ -44,13 +44,98 @@ while True:
                         menosVendido = producto
             
                 print(f"El menos vendido es {menosVendido.nombre} con {menosVendido.ventas} unidades")
+                
             else:
                 print("No hay productos registrados")
 
         case "3":
-            pass
-        
-        case "4":
+
+            #¿Cuándo hago gestión de inventario?
+            #1. Cuando agregamos productos
+            #2. Cuando eliminamos productos
+            #3. Cuando modificamos productos (cambiar nombre, precio o stock)
+
+            while True:
+                
+                print("""   
+1. Agregar producto
+2. Eliminar producto
+3. Modificar producto
+""")
+                opcionSub = input("Opción: ")
+
+                #Match es como un switch que lo que hace es recuperar el valor de la variable y va a realizar alguna
+                #acción dependiendo del valor de la misma
+                match opcionSub:
+
+                    case "1":
+
+                        nombre = input("Ingrese el nombre: ")
+                        precio = input("Ingrese el precio: ")
+                        existencias = input("Ingrese las existencias: ")
+
+                        precio = float(precio)
+                        existencias = int(existencias)
+                        
+                        if esValido(nombre):
+                            producto = Producto(nombre, precio, existencias)
+                            productos.append(producto)
+                            
+                            print("El producto fue gregado.")
+
+                        else:
+                            print("El producto ya existe.")
+                            
+
+                    case "2":
+                        
+                        nombre = input("Ingrese el nombre: ")
+                        existe = False
+
+                        for producto in productos:
+                            if producto.nombre == nombre:
+                                producto.eliminar()
+                                existe = True
+                                print("El producto ha sido eliminado.")
+                                break
+                        
+                        if not existe:
+                            print("El producto solicitado no existe")
+            
+
+                    case "3":
+                        #Yo pido el nombre actual del producto que quiero editar o actualizar
+                        nombre = input("Ingrese el nombre del producto que desea modificar:  ")
+                        existe = False
+                        
+                        #recorro la lista de productos
+                        for producto in productos:
+
+                            #comparo los nombres de los productos con el nombre que estoy buscando
+                            if producto.nombre == nombre:
+
+                                #Si yo entro aquí quiere decir que encontré el producto que estoy buscando
+
+                                #Aquí pido el nuevo nombre que va a tener el producto
+                                nuevoNombre = input("Ingrese el nuevo nombre, sino desea modificarlo presione 'Enter': ")
+                                precio = input("Ingrese el nuevo precio, sino desea modificarlo presione 0 (cero) y luego 'Enter': ")
+                                
+                                precio = float(precio)
+                                producto.actualizar(precio, nuevoNombre)
+                                existe = True
+                                print("El producto ha sido modificado")
+
+                        if not existe:
+
+                            print("El producto solicitado a modificar no existe")
+
+                                
+
+                                
+                    case _:
+                        print("Opción incorrecta, por favor elige una de las anteriores.")
+  
+        case "4": #Ver ganancias del dia
             pass
 
         case "5":

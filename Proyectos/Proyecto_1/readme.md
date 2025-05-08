@@ -26,7 +26,7 @@ Necesitamos registrar los productos para poder llevar el inventario y también r
 
 ## ¿Cómo lo hacemos? (CONCEPCIÓN)
 
-Lo haremos con clases, para encapsular los datos de cada objeto, en este caso, productos y ventas
+Lo haremos con clases, para encapsular los datos de cada objeto, en este caso, productos y ventas. También usaremos listas para simular nuestra base de datos.
 
 
 ```python
